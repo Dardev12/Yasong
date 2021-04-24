@@ -26,6 +26,8 @@ repositories {
     mavenLocal()
     jcenter()
     maven { url 'https://kotlin.bintray.com/ktor' }
+    maven { url "https://dl.bintray.com/kotlin/kotlinx" }
+    maven { url "https://dl.bintray.com/kotlin/exposed" }
 }
 
 dependencies {
@@ -34,5 +36,13 @@ dependencies {
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-auth:$ktor_version"
+
+    implementation "io.ktor:ktor-client-gson:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+
+    implementation("mysql:mysql-connector-java:8.0.15")
+    implementation "org.ktorm:ktorm-core:3.2.0"
+    implementation "org.ktorm:ktorm-support-mysql:3.2.0"
+
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
