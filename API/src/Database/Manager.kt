@@ -11,7 +11,7 @@ class Manager{
     private val yasongDatabase: Database
 
     init{
-        val yaUrl=" server=$hostname;uid=$userName;\"pwd=;database=$databaseName;"
+        val yaUrl="jdbc:mysql://$hostname:3306/$databaseName?user=$userName&password=$password&useSSL=false"
         yasongDatabase=Database.connect(yaUrl)
     }
 }

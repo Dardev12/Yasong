@@ -1,7 +1,8 @@
 
-import org.ktorm.schema.Table
-import org.ktorm.schema.int
+import kotlinx.serialization.Serializable
+import org.ktorm.schema.*
 
+@Serializable
 data class Playlist(
     val tagPlaylist:Int,
     val tagUser:Int,

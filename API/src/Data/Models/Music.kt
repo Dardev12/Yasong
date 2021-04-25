@@ -1,6 +1,8 @@
+import kotlinx.serialization.Serializable
 import org.ktorm.schema.*
 import java.time.LocalTime
 
+@Serializable
 data class Music(
     val tag:Int,
     val title:String,

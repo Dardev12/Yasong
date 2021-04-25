@@ -1,7 +1,7 @@
-import org.ktorm.schema.Table
-import org.ktorm.schema.int
-import org.ktorm.schema.varchar
+import kotlinx.serialization.Serializable
+import org.ktorm.schema.*
 
+@Serializable
 data class User(
     val tag:Int,
     val lastName:String,

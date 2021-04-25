@@ -7,6 +7,10 @@ import io.ktor.features.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.auth.*
+import io.ktor.serialization.*
+import musicRouting
+import playlistRouting
+import userRouting
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -23,14 +27,20 @@ fun Application.module(testing: Boolean = false) {
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
+    install(ContentNegotiation){
+        json()
+    }
 
     install(Authentication) {
     }
 
     routing {
         get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
+            call.respondText("HELLO Yasong!", contentType = ContentType.Text.Plain)
         }
+        musicRouting()
+        playlistRouting()
+        userRouting()
     }
 }
 
