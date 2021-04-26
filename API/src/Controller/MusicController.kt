@@ -3,11 +3,13 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-    fun Route.musicRouting(){
+    fun Route.musicRouting(musicDAO: MusicDAO){
+        val amusicDAO=musicDAO
+
         route("/Music"){
             get("/play") {
                 // code to get all tickets
-                call.respondText("Play Music!", contentType = ContentType.Text.Plain)
+                call.respond(amusicDAO.getAll())
             }
             get("/{id}") {
                 // code to get a specific ticket

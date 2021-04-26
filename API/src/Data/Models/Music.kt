@@ -1,21 +1,24 @@
 import kotlinx.serialization.Serializable
-import org.ktorm.schema.*
+import org.jetbrains.exposed.sql.Table
+import java.sql.Time
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 
-@Serializable
-data class Music(
-    val tag:Int,
-    val title:String,
-    val artist:String,
-    val duration: LocalTime,
-    val tagU:Int
-)
-object Musics: Table<Nothing>("Music"){
-    val tag=int("TAG_Music").primaryKey()
-    val title=varchar("Title")
-    val artist=varchar("Artiste")
-    val duration= time("Duration")
-    val tagU=int("TAG_USER")
+object Music : Table("Music") {
+    val tag = integer("TAG_Music")
+    val title = varchar("Title", length = 50)
+    val artist = varchar("Artiste", length = 50)
+    val duration = varchar("Duaration",length = 50)
+    val tagU = integer("TAG_USER")
 
 
 }
+@Serializable
+data class Musics(
+    val tag:Int,
+    val title:String,
+    val artist:String,
+    val duration: String,
+    val tagU:Int
+)

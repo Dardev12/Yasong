@@ -24,9 +24,9 @@ CREATE TABLE User(
 CREATE TABLE Music(
         TAG_Music Int  Auto_increment  NOT NULL ,
         Title     Varchar (50) NOT NULL ,
-        Artist    Varchar (50) NOT NULL ,
-        Duration  TimeStamp NOT NULL ,
-        TAG_USER  Int NOT NULL
+        Artist    Varchar (50)  NULL ,
+        Duration  Varchar (50) NULL ,
+        TAG_USER  Int NULL
 	,CONSTRAINT Music_PK PRIMARY KEY (TAG_Music)
 
 	,CONSTRAINT Music_User_FK FOREIGN KEY (TAG_USER) REFERENCES User(TAG_USER)
