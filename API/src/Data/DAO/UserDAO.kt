@@ -1,7 +1,7 @@
 import com.dardev.Data.Interface.IUserDAO
 
 class UserDAO :IUserDAO{
-    val listUser= mutableListOf<Users>()
+
 
     override fun addUser(user: User): User {
         TODO("Not yet implemented")

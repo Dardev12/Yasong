@@ -1,6 +1,7 @@
 package com.dardev.Database
 
-import org.ktorm.database.Database
+import org.jetbrains.exposed.sql.Database
+
 
 class Manager{
 
@@ -9,10 +10,10 @@ class Manager{
     private val userName="root"
     private val password=""
 
-    fun initDB(){
+    fun initDB(): Database {
         val yaUrl="jdbc:mysql://$userName:$password@$hostname:3306/$databaseName?useUnicode=$userName&serverTimezone=UTC"
         val driver = "com.mysql.cj.jdbc.Driver"
-        Database.connect(yaUrl,driver)
+        return Database.connect(yaUrl,driver)
     }
 
 

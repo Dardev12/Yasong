@@ -1,8 +1,7 @@
-import kotlinx.serialization.Serializable
-import org.ktorm.schema.*
+import org.jetbrains.exposed.sql.Table
 
-@Serializable
-data class User(
+
+data class Users(
     val tag:Int,
     val lastName:String,
     val firstName:String,
@@ -11,10 +10,11 @@ data class User(
     val password:String
 )
 
-object Users : Table<Nothing>("User"){
-    val tag=int("").primaryKey()
-    val lastName=varchar("")
-    val firstName=varchar("")
-    val email=varchar("")
-    val gender=  varchar("")
+object User : Table("user"){
+    val tag=integer("TAG_USER").primaryKey().autoIncrement()
+    val lastName=varchar("Lastname",50)
+    val firstName=varchar("Firstname",50)
+    val email=varchar("Email",1)
+    val gender=  varchar("Gender",1)
+    val password=varchar("Password",50)
 }
