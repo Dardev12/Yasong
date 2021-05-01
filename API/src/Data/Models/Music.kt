@@ -19,8 +19,8 @@ object Music : Table("music") {
 }
 @Serializable
 data class Musics(
-    @JsonInclude(value=JsonInclude.Include.NON_NULL)
     val tag:Int,
+    @JsonInclude(value=JsonInclude.Include.NON_NULL)
     val title:String,
     val artist:String,
     val duration: String,

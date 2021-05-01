@@ -3,6 +3,7 @@ import com.dardev.Data.Interface.IMusicDAO
 import com.google.gson.Gson
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.lang.Exception
 
 class MusicDAO(private val db:Database):IMusicDAO {
     override fun init() = transaction(db){
@@ -10,13 +11,18 @@ class MusicDAO(private val db:Database):IMusicDAO {
     }
 
     override fun addMusic(music: Musics){
-        transaction {
-            Music.insert {
-                it[this.title]=music.title
-                it[this.artist]=music.artist
 
+            transaction {
+                Music.insert {
+                    it[title]=music.title
+                    it[artist]=music.artist
+                    it[duration]=music.duration
+                    it[tagU]=music.tagU
+
+                }
             }
-        }
+
+
         Unit
     }
 
@@ -38,11 +44,11 @@ class MusicDAO(private val db:Database):IMusicDAO {
 
     }
 
-    override fun getByArtiste(artiste: String): Music {
+    override fun getByArtiste(artiste: String): String {
         TODO("Not yet implemented")
     }
 
-    override fun getById(tag: Int): Music {
+    override fun getById(tag: Int): String {
         TODO("Not yet implemented")
     }
 

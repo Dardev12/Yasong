@@ -16,12 +16,17 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
             get("/{id}") {
                 // code to get a specific ticket
             }
-            get("/titre"){
-                call.respondText(aMusicDAO.getByTitle("Anaconda"),ContentType.Text.Plain)
+            get("/titre/{name}"){
+                if(call.parameters["name"]!=null)
+                    call.respondText(aMusicDAO.getByTitle(call.parameters["name"].toString()),ContentType.Text.Plain)
+                else
+                    call.respondText("Cette Musique n'existe pas dans la base de donné",ContentType.Text.Plain)
+
+
             }
-            post("/add/{title}/{artist}") {
+            post("/add") {
                 // create a new ticket
-                var music=call.receive<Musics>()
+                var music= call.receive<Musics>()
 
                 aMusicDAO.addMusic(music)
                 call.respond(HttpStatusCode.Created)

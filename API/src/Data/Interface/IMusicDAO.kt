@@ -7,9 +7,9 @@ import io.ktor.utils.io.core.*
 interface IMusicDAO:Closeable {
     fun init()
     fun getAll(): String
-    fun getById(tag:Int):Music
+    fun getById(tag:Int):String
     fun getByTitle(titre:String):String
-    fun getByArtiste(artiste: String):Music
+    fun getByArtiste(artiste: String):String
     fun addMusic(music: Musics)
     fun updateMusic(tag: Int,music: Music):Boolean
     fun removeMusic(tag: Int):Boolean
