@@ -11,10 +11,13 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
         route("/Music"){
             get("/play") {
                 // code to get all tickets
-                call.respond(mapOf("music" to aMusicDAO.getAll()))
+                call.respondText(aMusicDAO.getAll(),ContentType.Text.Plain)
             }
             get("/{id}") {
                 // code to get a specific ticket
+            }
+            get("/titre"){
+                call.respondText(aMusicDAO.getByTitle("Anaconda"),ContentType.Text.Plain)
             }
             post("/add/{title}/{artist}") {
                 // create a new ticket

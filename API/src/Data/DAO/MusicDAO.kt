@@ -1,10 +1,7 @@
 
 import com.dardev.Data.Interface.IMusicDAO
 import com.google.gson.Gson
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class MusicDAO(private val db:Database):IMusicDAO {
@@ -32,16 +29,12 @@ class MusicDAO(private val db:Database):IMusicDAO {
     }
 
     override fun getByTitle(titre: String): String {
-//        var json:String=""
-//        transaction{
-//            val res= Music.selectAll()
-//            val c=listMusic
-//            for(m in res){
-//                c.add(Musics(tag=m[Music.tag],title=m[Music.title],artist = m[Music.artist],duration=m[Music.duration],tagU = m[Music.tagU]))
-//            }
-//            json=Gson().toJson(c)
-//        }
-        return "json"
+            var json:String=""
+          transaction{
+              val res= Music.select {Music.title eq titre}.single()[Music.title]
+              json=Gson().toJson(res)
+          }
+        return json
 
     }
 
@@ -53,16 +46,17 @@ class MusicDAO(private val db:Database):IMusicDAO {
         TODO("Not yet implemented")
     }
 
-    override fun getAll(): List<Musics> = transaction(db){
-        Music.selectAll().map {
-                Musics(
-                    it[Music.tag],
-                    it[Music.title],
-                    it[Music.artist],
-                    it[Music.duration],
-                    it[Music.tagU]
-                )
+    override fun getAll(): String {
+        var listjson:String=""
+        transaction{
+            val listmusic = ArrayList<Musics>()
+            for(aMusic in Music.selectAll()){
+                listmusic.add(Musics( tag = aMusic[Music.tag],title = aMusic[Music.title],artist =aMusic[Music.artist],duration =aMusic[Music.duration],tagU = aMusic[Music.tagU]  ))
+            }
+            listjson=Gson().toJson(listmusic)
         }
+       return listjson
+
     }
 
 

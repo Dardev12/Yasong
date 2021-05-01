@@ -41,6 +41,8 @@ dependencies {
     implementation "io.ktor:ktor-jackson:$ktor_version"
     implementation "io.ktor:ktor-client-gson:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.ktor:ktor-serialization:$ktor_version"
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.0'
 
     implementation("mysql:mysql-connector-java:8.0.15")
     //implementation "org.ktorm:ktorm-core:3.2.0"

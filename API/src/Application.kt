@@ -18,6 +18,9 @@ import musicRouting
 import org.jetbrains.exposed.sql.Database
 import playlistRouting
 import userRouting
+import com.fasterxml.jackson.databind.*
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import io.ktor.jackson.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -25,10 +28,16 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation){
-        register(ContentType.Application.Json, JacksonConverter())
+        jackson {
+            registerModule(JavaTimeModule())
+            enable(SerializationFeature.INDENT_OUTPUT)
+            enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
+        }
     }
-    val userDAO:UserDAO=UserDAO()
-    val aMusicDAO=MusicDAO(Database.connect("jdbc:mysql://root:@localhost:3306/yasong_db?useUnicode=root&serverTimezone=UTC","com.mysql.cj.jdbc.Driver"))
+    val manager=Manager()
+    val userDAO=UserDAO()
+
+    val aMusicDAO=MusicDAO(manager.initDB())
     aMusicDAO.init()
 
 

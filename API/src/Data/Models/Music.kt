@@ -1,6 +1,8 @@
 
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Table
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.sql.Time
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,7 +17,9 @@ object Music : Table("music") {
 
 
 }
+@Serializable
 data class Musics(
+    @JsonInclude(value=JsonInclude.Include.NON_NULL)
     val tag:Int,
     val title:String,
     val artist:String,
