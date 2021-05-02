@@ -4,20 +4,30 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 
-    fun Route.userRouting(){
+fun Route.userRouting(aUserDAO: UserDAO){
+
         route("/User"){
+
             get("/view") {
                 // code to get all tickets
-                call.respondText("Hello User!", contentType = ContentType.Text.Plain)
+                call.respondText(aUserDAO.getAll(),ContentType.Text.Plain)
             }
-            get("/{id}") {
-                // code to get a specific ticket
+            get("/Code/{id}") {
+                if(call.parameters["id"] != null)
+                    call.respondText(aUserDAO.getById(call.parameters["id"]!!.toInt()),ContentType.Text.Plain)
             }
-            post("/") {
-                // create a new ticket
+            get("/Name/{name}") {
+                if(call.parameters["name"] != null)
+                    call.respondText(aUserDAO.getByName(call.parameters["name"].toString()),ContentType.Text.Plain)
+            }
+            post("/"){
+
+            }
+            put("/"){
+
             }
             delete("/{id}") {
                 // delete an existing ticket
             }
         }
-    }
+}

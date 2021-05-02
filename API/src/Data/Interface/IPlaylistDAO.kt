@@ -1,12 +1,14 @@
 package com.dardev.Data.Interface
 
 import Playlist
+import io.ktor.utils.io.core.*
 
-interface IPlaylistDAO {
-    fun getById(tag : Int):Playlist
-    fun getByString(title:String):Playlist
-    fun getAll():List<Playlist>
-    fun addPlaylist(playlist: Playlist):Playlist
+interface IPlaylistDAO:Closeable {
+    fun init()
+    fun getById(tag : Int,tagM: Int):String
+    fun getByString(title:String):String
+    fun getAll():String
+    fun addPlaylist(playlist: Playlist)
     fun removePlaylist(tagP: Int):Boolean
     fun removeMusicP(tagM:Int):Boolean
 }

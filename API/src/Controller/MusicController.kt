@@ -1,38 +1,39 @@
-import com.dardev.Database.Manager
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import org.jetbrains.exposed.sql.Database
 
 fun Route.musicRouting(aMusicDAO: MusicDAO){
 
         route("/Music"){
-            get("/play") {
-                // code to get all tickets
+
+            get("/Bibliothèque") {
                 call.respondText(aMusicDAO.getAll(),ContentType.Text.Plain)
             }
-            get("/{id}") {
-                // code to get a specific ticket
+            get("/Tag/{id}") {
+                if(call.parameters["id"] != null)
+                    call.respondText(aMusicDAO.getById(call.parameters["id"]!!.toInt()),ContentType.Text.Plain)
             }
-            get("/titre/{name}"){
+            get("/Titre/{name}"){
                 if(call.parameters["name"]!=null)
                     call.respondText(aMusicDAO.getByTitle(call.parameters["name"].toString()),ContentType.Text.Plain)
-                else
-                    call.respondText("Cette Musique n'existe pas dans la base de donné",ContentType.Text.Plain)
-
-
             }
-            post("/add") {
-                // create a new ticket
+            get("/Artiste/{name}"){
+                if(call.parameters["name"]!=null)
+                    call.respondText(aMusicDAO.getByArtiste(call.parameters["name"].toString()),ContentType.Text.Plain)
+            }
+
+            post("/Add") {
                 var music= call.receive<Musics>()
 
                 aMusicDAO.addMusic(music)
                 call.respond(HttpStatusCode.Created)
             }
-            delete("/{id}") {
-                // delete an existing ticket
+            put("/Modifier"){
+
+            }
+            delete("/Suprimer/{id}") {
             }
         }
     }

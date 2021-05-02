@@ -1,4 +1,4 @@
-package com.dardev.Database
+package Configuration.Database
 
 import org.jetbrains.exposed.sql.Database
 
