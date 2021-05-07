@@ -17,6 +17,12 @@ import playlistRouting
 import userRouting
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import io.ktor.gson.*
+import io.ktor.gson.gson
+import io.ktor.request.*
+import io.ktor.serialization.*
+import io.ktor.util.pipeline.*
+import kotlinx.serialization.json.Json
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -24,6 +30,16 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation){
+        /*json(Json {
+            prettyPrint = true
+            isLenient = true
+        })
+        gson {
+            setPrettyPrinting()
+            disableHtmlEscaping()
+            registerTypeAdapter(yourClass, GsonInstantAdapter)
+        }*/
+
         jackson {
             registerModule(JavaTimeModule())
             enable(SerializationFeature.INDENT_OUTPUT)
@@ -54,4 +70,5 @@ fun Application.module(testing: Boolean = false) {
 
 
 }
+
 

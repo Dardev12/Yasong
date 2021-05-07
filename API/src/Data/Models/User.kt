@@ -14,7 +14,7 @@ data class Users(
 )
 
 object User : Table("user"){
-    val tag=integer("TAG_USER").primaryKey().autoIncrement()
+    val tag=integer("TAG_USER").autoIncrement()
     val lastName=varchar("Lastname",50)
     val firstName=varchar("Firstname",50)
     val email=varchar("Email",1)

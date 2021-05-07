@@ -1,4 +1,5 @@
 
+
 import com.dardev.Data.Interface.IMusicDAO
 import com.google.gson.Gson
 import org.jetbrains.exposed.sql.*
@@ -10,8 +11,11 @@ class MusicDAO(private val db:Database):IMusicDAO {
     }
 
     override fun addMusic(music: Musics){
-            transaction {
-                Music.insert {
+
+        transaction {
+                addLogger(StdOutSqlLogger)
+
+                Music.insert{
                     it[title]= music.title ?:""
                     it[artist]=music.artist?:""
                     it[duration]=music.duration?:""
@@ -20,15 +24,25 @@ class MusicDAO(private val db:Database):IMusicDAO {
                 }
             }
 
-        Unit
+
     }
 
-    override fun updateMusic(tag: Int, music: Music): Boolean {
-        TODO("Not yet implemented")
+    override fun updateMusic(tag: Int, music: Musics) {
+        transaction {
+            Music.update({Music.tag eq tag}){
+                it[Music.title]= music.title ?:""
+                it[Music.artist]=music.artist?:""
+                it[Music.duration]=music.duration?:""
+            }
+        }
     }
 
-    override fun removeMusic(tag: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun removeMusic(tag: Int) {
+
+        transaction {
+                Music.deleteWhere { Music.tag eq tag }
+
+        }
     }
 
     override fun getByTitle(titre: String): String {

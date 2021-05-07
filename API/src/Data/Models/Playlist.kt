@@ -14,7 +14,7 @@ data class Playlists(
 
 object Playlist: Table("playlist"){
 
-    val tagPlaylist = integer("TAG_PLAYLIST").primaryKey()
+    val tagPlaylist = integer("TAG_PLAYLIST").autoIncrement()
     val tagUser=integer("TAG_USER").uniqueIndex().references(User.tag)
     val tagMusic=integer("TAG_Music").uniqueIndex().references(Music.tag)
 }

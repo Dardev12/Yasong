@@ -1,25 +1,24 @@
-
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Table
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonInclude
-import java.sql.Time
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import org.jetbrains.exposed.sql.Column
 
-object Music : Table("music") {
-    val tag = integer("Tag_Music").primaryKey().autoIncrement()
-    val title = varchar("Title", length = 50)
-    val artist = varchar("Artist", length = 50)
-    val duration = varchar("Duration",length = 50)
-    val tagU = integer("TAG_USER").uniqueIndex().references(User.tag)
 
+object Music : Table() {
+
+    val tag:Column<Int> = integer("Tag_Music").autoIncrement()
+    val title:Column<String> = varchar("Title", length = 50)
+    val artist:Column<String> = varchar("Artist", length = 50)
+    val duration:Column<String> = varchar("Duration",length = 50)
+    val tagU:Column<Int> = integer("TAG_USER").uniqueIndex().references(User.tag)
+
+    override val primaryKey=PrimaryKey(tag,name="Music_PK")
 
 }
+
 @Serializable
 data class Musics(
-    val tag:Int?,
+    val tag:Int? = null,
     @JsonInclude(value=JsonInclude.Include.NON_NULL)
     val title:String?,
     val artist:String?,

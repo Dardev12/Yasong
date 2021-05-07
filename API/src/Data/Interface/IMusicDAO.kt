@@ -11,6 +11,6 @@ interface IMusicDAO:Closeable {
     fun getByTitle(titre:String):String
     fun getByArtiste(artiste: String):String
     fun addMusic(music: Musics)
-    fun updateMusic(tag: Int,music: Music):Boolean
-    fun removeMusic(tag: Int):Boolean
+    fun updateMusic(tag: Int,music: Musics)
+    fun removeMusic(tag: Int)
 }
