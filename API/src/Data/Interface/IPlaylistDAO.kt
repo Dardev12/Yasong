@@ -9,6 +9,6 @@ interface IPlaylistDAO:Closeable {
     fun getByString(title:String):String
     fun getAll():String
     fun addPlaylist(playlist: Playlist)
-    fun removePlaylist(tagP: Int):Boolean
-    fun removeMusicP(tagM:Int):Boolean
+    fun removePlaylist(tagP: Int)
+    fun removeMusicP(tagP:Int,tagM:Int)
 }

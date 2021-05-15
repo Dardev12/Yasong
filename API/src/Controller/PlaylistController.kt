@@ -24,8 +24,17 @@ fun Route.playlistRouting(aPlaylistDAO: PlaylistDAO){
             put("/"){
 
             }
-            delete("/{id}") {
-                // delete an existing ticket
+            delete("/Supprimer/{id}") {
+                if(call.parameters["id"]!=null){
+                    aPlaylistDAO.removePlaylist(call.parameters["id"]!!.toInt())
+                    call.respond(HttpStatusCode.OK,"OK")
+                }
+            }
+            delete("/SupprimerMusic/{id}/{music}") {
+                if(call.parameters["id"]!=null){
+                    aPlaylistDAO.removeMusicP(call.parameters["id"]!!.toInt(),call.parameters["music"]!!.toInt())
+                    call.respond(HttpStatusCode.OK,"OK")
+                }
             }
         }
 }

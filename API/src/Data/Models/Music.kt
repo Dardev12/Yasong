@@ -1,4 +1,4 @@
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import org.jetbrains.exposed.sql.Table
 import com.fasterxml.jackson.annotation.JsonInclude
 import org.jetbrains.exposed.sql.Column
@@ -18,10 +18,10 @@ object Music : Table() {
 
 @Serializable
 data class Musics(
-    val tag:Int? = null,
+    val tag:Int? =null,
     @JsonInclude(value=JsonInclude.Include.NON_NULL)
-    val title:String?,
-    val artist:String?,
-    val duration: String?,
-    val tagU:Int?
+    val title:String?="",
+    val artist:String?="",
+    val duration: String?="",
+    val tagU:Int? =null
 )

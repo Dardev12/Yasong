@@ -11,12 +11,16 @@ class PlaylistDAO(private val db:Database):IPlaylistDAO {
     override fun addPlaylist(playlist: Playlist) {
         TODO("Not yet implemented")
     }
-    override fun removePlaylist(tag: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun removePlaylist(tag: Int){
+        transaction {
+            Playlist.deleteWhere { Playlist.tagPlaylist eq tag }
+        }
     }
 
-    override fun removeMusicP(tagM: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun removeMusicP(tagP:Int,tagM: Int) {
+        transaction {
+            Playlist.deleteWhere { Playlist.tagPlaylist eq tagP and (Playlist.tagMusic eq tagM) }
+        }
     }
 
     override fun getByString(title: String): String {

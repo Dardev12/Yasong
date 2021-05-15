@@ -5,11 +5,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.addLogger
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.transactions.transaction
+import kotlinx.serialization.json.*
 
 fun Route.musicRouting(aMusicDAO: MusicDAO){
 
@@ -32,10 +28,19 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
             }
 
             post("/Add") {
+                try{
+                    val post = call.receive<Musics>()
+                    //val music = call.receiveParameters()
+                    //val obj=Musics(null,music["title"],music["artist"],music["duration"], music["tagU"]?.toInt())
+                    //val obj=Json.decodeFromString<Musics>(music.toString())
+                    aMusicDAO.addMusic(post)
+                    call.respond(HttpStatusCode.OK,"OK")
 
-                val music = call.receive<Musics>()
-                aMusicDAO.addMusic(music)
-                call.respondText(music.toString(),ContentType.Text.Plain)
+
+                }catch (e:Exception){
+                    println(e)
+                }
+
             }
             put("/Modifier/{id}"){
 
@@ -49,6 +54,7 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
 
                 if(call.parameters["id"]!=null){
                     aMusicDAO.removeMusic(call.parameters["id"]!!.toInt())
+                    call.respond(HttpStatusCode.OK,"OK")
                 }
 
             }

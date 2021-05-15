@@ -10,5 +10,5 @@ interface IUserDAO:Closeable {
     fun getAll():String
     fun addUser(user: User)
     fun updateUser(tag: Int,aUser : User ):Boolean
-    fun removeUser(tag:Int):Boolean
+    fun removeUser(tag:Int)
 }

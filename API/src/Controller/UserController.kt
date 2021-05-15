@@ -26,8 +26,11 @@ fun Route.userRouting(aUserDAO: UserDAO){
             put("/"){
 
             }
-            delete("/{id}") {
-                // delete an existing ticket
+            delete("/Supprimer/{id}") {
+                if(call.parameters["id"]!=null){
+                    aUserDAO.removeUser(call.parameters["id"]!!.toInt())
+                    call.respond(HttpStatusCode.OK,"OK")
+                }
             }
         }
 }

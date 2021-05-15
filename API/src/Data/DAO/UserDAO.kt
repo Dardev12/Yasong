@@ -1,9 +1,6 @@
 import com.dardev.Data.Interface.IUserDAO
 import com.google.gson.Gson
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserDAO(private val db:Database) :IUserDAO{
@@ -19,8 +16,10 @@ class UserDAO(private val db:Database) :IUserDAO{
         TODO("Not yet implemented")
     }
 
-    override fun removeUser(tag: Int): Boolean {
-        TODO("Not yet implemented")
+    override fun removeUser(tag: Int) {
+        transaction {
+            User.deleteWhere { User.tag eq tag }
+        }
     }
 
     override fun getById(tag: Int):String {
