@@ -4,7 +4,7 @@ import org.jetbrains.exposed.sql.Table
 
 @Serializable
 data class Users(
-    @JsonInclude(value= JsonInclude.Include.NON_NULL)
+    //@JsonInclude(value= JsonInclude.Include.NON_NULL)
     val tag:Int?,
     val lastName:String?,
     val firstName:String?,

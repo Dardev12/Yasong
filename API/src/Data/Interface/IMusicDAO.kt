@@ -4,7 +4,7 @@ import Music
 import Musics
 import io.ktor.utils.io.core.*
 
-interface IMusicDAO:Closeable {
+interface IMusicDAO {
     fun init()
     fun getAll(): String
     fun getById(tag:Int):String

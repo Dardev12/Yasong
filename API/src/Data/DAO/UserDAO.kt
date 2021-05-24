@@ -1,5 +1,7 @@
 import com.dardev.Data.Interface.IUserDAO
-import com.google.gson.Gson
+
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -30,7 +32,7 @@ class UserDAO(private val db:Database) :IUserDAO{
                 aUser=Users(it[User.tag],it[User.lastName], it[User.firstName],it[User.email],it[User.gender],it[User.password])
             }
 
-            jason=Gson().toJson(aUser)
+            jason= Json.encodeToString(aUser)
         }
         return jason
     }
@@ -43,7 +45,7 @@ class UserDAO(private val db:Database) :IUserDAO{
                 aUser=Users(it[User.tag],it[User.lastName], it[User.firstName],it[User.email],it[User.gender],it[User.password])
             }
 
-            jason=Gson().toJson(aUser)
+            jason= Json.encodeToString(aUser)
         }
         return jason
     }
@@ -55,7 +57,7 @@ class UserDAO(private val db:Database) :IUserDAO{
             for (user in  User.selectAll()){
                 listUser.add(Users(tag = user[User.tag],lastName = user[User.lastName],firstName = user[User.firstName],email = user[User.email],gender = user[User.gender],password = user[User.password]))
             }
-            jason=Gson().toJson(listUser)
+            jason= Json.encodeToString(listUser)
         }
         return jason
     }

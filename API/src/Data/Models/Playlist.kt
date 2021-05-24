@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.Table
 
 @Serializable
 data class Playlists(
-    @JsonInclude(value= JsonInclude.Include.NON_NULL)
+    //@JsonInclude(value= JsonInclude.Include.NON_NULL)
     val tagPlaylist:Int?,
     val tagUser:Int?,
     val tagMusic:Int?

@@ -4,48 +4,43 @@ import MusicDAO
 import PlaylistDAO
 import UserDAO
 import Configuration.Database.Manager
-import Musics
+import musicRouting
+import playlistRouting
+import userRouting
+
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.features.*
 import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.jackson.*
+
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import musicRouting
-import playlistRouting
-import userRouting
-import com.fasterxml.jackson.databind.*
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import io.ktor.gson.*
-import io.ktor.gson.gson
-import io.ktor.request.*
+
 import io.ktor.serialization.*
-import io.ktor.util.pipeline.*
-import kotlinx.serialization.json.Json
+import io.ktor.http.ContentType
+
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    install(DefaultHeaders)
+    install(CallLogging)
     install(ContentNegotiation){
-        /*json(Json {
-            prettyPrint = true
-            isLenient = true
-        })
+        /*
         gson {
             setPrettyPrinting()
             disableHtmlEscaping()
             registerTypeAdapter(yourClass, GsonInstantAdapter)
         }*/
+        json()
 
-        jackson {
-            registerModule(JavaTimeModule())
-            enable(SerializationFeature.INDENT_OUTPUT)
-            enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
-        }
+//        jackson {
+//            registerModule(JavaTimeModule())
+//            enable(SerializationFeature.INDENT_OUTPUT)
+//            enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
+//        }
     }
     val manager= Manager()
     val aUserDAO=UserDAO(manager.initDB())

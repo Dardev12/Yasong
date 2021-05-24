@@ -1,5 +1,7 @@
 import com.dardev.Data.Interface.IPlaylistDAO
-import com.google.gson.Gson
+
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -24,24 +26,24 @@ class PlaylistDAO(private val db:Database):IPlaylistDAO {
     }
 
     override fun getByString(title: String): String {
-        var jason:String=""
+        var json:String=""
         var playlists:Playlists
         transaction {
 
         }
-        return jason
+        return json
     }
     override fun getById(tag: Int,tagM:Int): String {
-        var jason:String=""
+        var json:String=""
         var playlists=Playlists(null,null,null)
         transaction {
             Playlist.select { Playlist.tagPlaylist eq tag }.andWhere { Playlist.tagUser eq tagM }
                 .withDistinct().map {
                     playlists=Playlists(it[Playlist.tagPlaylist],it[Playlist.tagUser],it[Playlist.tagMusic])
                 }
-            jason=Gson().toJson(playlists)
+            json= Json.encodeToString(playlists)
         }
-        return jason
+        return json
     }
 
     override fun getAll(): String {
@@ -51,7 +53,7 @@ class PlaylistDAO(private val db:Database):IPlaylistDAO {
             for (aPlaylists in Playlist.selectAll()){
                 listPlaylists.add(Playlists(aPlaylists[Playlist.tagPlaylist],aPlaylists[Playlist.tagUser],aPlaylists[Playlist.tagMusic]))
             }
-            jason=Gson().toJson(listPlaylists)
+            jason=Json.encodeToString(listPlaylists)
         }
         return jason
     }

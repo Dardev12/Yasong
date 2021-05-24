@@ -1,10 +1,11 @@
-import com.google.gson.Gson
+
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 
 fun Route.musicRouting(aMusicDAO: MusicDAO){
@@ -28,27 +29,34 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
             }
 
             post("/Add") {
-                try{
-                    val post = call.receive<Musics>()
+
+                    //val post = call.receive<Musics>()
+                    val post = Musics(null,"Testya","TEXTO","3min",2)
+
+                    /*val obj=call.receive<JsonObject>()
+                    val test = Json.encodeToString(obj)
+                    val data=Json.decodeFromString<Musics>(test)*/
+
                     //val music = call.receiveParameters()
                     //val obj=Musics(null,music["title"],music["artist"],music["duration"], music["tagU"]?.toInt())
                     //val obj=Json.decodeFromString<Musics>(music.toString())
                     aMusicDAO.addMusic(post)
-                    call.respond(HttpStatusCode.OK,"OK")
+                    call.respondText("It's work",ContentType.Text.Plain)
 
-
-                }catch (e:Exception){
-                    println(e)
-                }
+                    //call.respond()
+                    //call.respond(HttpStatusCode.Created,)
 
             }
             put("/Modifier/{id}"){
 
-                val music = call.receive<Musics>()
-                call.respondText(music.toString(),ContentType.Text.Plain)
+                //val music = call.receive<Musics>()
+                //call.respondText(music.toString(),ContentType.Text.Plain)
 
-                if(call.parameters["id"]!= null && music != null )
-                    aMusicDAO.updateMusic(call.parameters["id"]!!.toInt(),music)
+                val put = Musics(null,"Cry","Big Life","3min",2)
+                if(call.parameters["id"]!= null && put != null )
+                    aMusicDAO.updateMusic(call.parameters["id"]!!.toInt(),put)
+                
+                call.respondText("It's work",ContentType.Text.Plain)
             }
             delete("/Supprimer/{id}") {
 
@@ -60,4 +68,5 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
             }
         }
     }
+
 

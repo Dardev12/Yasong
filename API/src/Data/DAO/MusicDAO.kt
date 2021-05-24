@@ -1,7 +1,8 @@
 
 
 import com.dardev.Data.Interface.IMusicDAO
-import com.google.gson.Gson
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -11,20 +12,21 @@ class MusicDAO(private val db:Database):IMusicDAO {
     }
 
     override fun addMusic(music: Musics){
-
         transaction {
-                addLogger(StdOutSqlLogger)
-
+                //addLogger(StdOutSqlLogger)
+//                aMusic.new {
+//                    title= music.title ?:""
+//                    artist=music.artist?:""
+//                    duration=music.duration?:""
+//                    tagU=music.tagU?:0
+//                }
                 Music.insert{
                     it[title]= music.title ?:""
                     it[artist]=music.artist?:""
                     it[duration]=music.duration?:""
                     it[tagU]=music.tagU?:0
-
                 }
             }
-
-
     }
 
     override fun updateMusic(tag: Int, music: Musics) {
@@ -53,7 +55,7 @@ class MusicDAO(private val db:Database):IMusicDAO {
                   .withDistinct().map{
                   aMusic=Musics(it[Music.tag],it[Music.title],it[Music.artist],it[Music.duration],it[Music.tagU])
               }
-              json=Gson().toJson(aMusic)
+              json=Json.encodeToString(aMusic)
           }
         return json
 
@@ -67,7 +69,7 @@ class MusicDAO(private val db:Database):IMusicDAO {
                 .withDistinct().map {
                     aMusic=Musics(it[Music.tag],it[Music.title],it[Music.artist],it[Music.duration],it[Music.tagU])
             }
-            json=Gson().toJson(aMusic)
+            json=Json.encodeToString(aMusic)
         }
         return json
     }
@@ -80,7 +82,7 @@ class MusicDAO(private val db:Database):IMusicDAO {
                 aMusic=Musics(it[Music.tag],it[Music.title],it[Music.artist],it[Music.duration],it[Music.tagU])
 
             }
-            json=Gson().toJson(aMusic)
+            json=Json.encodeToString(aMusic)
         }
         return json
     }
@@ -92,14 +94,11 @@ class MusicDAO(private val db:Database):IMusicDAO {
             for(aMusic in Music.selectAll()){
                 listmusic.add(Musics( tag = aMusic[Music.tag],title = aMusic[Music.title],artist =aMusic[Music.artist],duration =aMusic[Music.duration],tagU = aMusic[Music.tagU] ))
             }
-            listjson=Gson().toJson(listmusic)
+            listjson=Json.encodeToString(listmusic)
         }
        return listjson
     }
 
-
-
-    override fun close() {}
 }
 
 
