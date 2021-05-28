@@ -10,8 +10,13 @@ class PlaylistDAO(private val db:Database):IPlaylistDAO {
         SchemaUtils.create(User,Playlist,Music)
     }
 
-    override fun addPlaylist(playlist: Playlist) {
-        TODO("Not yet implemented")
+    override fun addPlaylist(playlist: Playlists) {
+        transaction {
+            Playlist.insert {
+                it[tagMusic]=playlist.tagMusic?:0
+                it[tagUser]=playlist.tagUser?:0
+            }
+        }
     }
     override fun removePlaylist(tag: Int){
         transaction {
@@ -41,6 +46,7 @@ class PlaylistDAO(private val db:Database):IPlaylistDAO {
                 .withDistinct().map {
                     playlists=Playlists(it[Playlist.tagPlaylist],it[Playlist.tagUser],it[Playlist.tagMusic])
                 }
+
             json= Json.encodeToString(playlists)
         }
         return json

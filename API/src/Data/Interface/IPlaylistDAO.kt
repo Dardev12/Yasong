@@ -1,6 +1,6 @@
 package com.dardev.Data.Interface
 
-import Playlist
+import Playlists
 import io.ktor.utils.io.core.*
 
 interface IPlaylistDAO:Closeable {
@@ -8,7 +8,7 @@ interface IPlaylistDAO:Closeable {
     fun getById(tag : Int,tagM: Int):String
     fun getByString(title:String):String
     fun getAll():String
-    fun addPlaylist(playlist: Playlist)
+    fun addPlaylist(playlist: Playlists)
     fun removePlaylist(tagP: Int)
     fun removeMusicP(tagP:Int,tagM:Int)
 }

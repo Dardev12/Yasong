@@ -20,11 +20,17 @@ fun Route.userRouting(aUserDAO: UserDAO){
                 if(call.parameters["name"] != null)
                     call.respondText(aUserDAO.getByName(call.parameters["name"].toString()),ContentType.Text.Plain)
             }
-            post("/"){
-
+            post("/Inscrit"){
+                val post=Users(null,"Mitch","Jean-Mi","michi@ail.com","M","michou")
+                aUserDAO.addUser(post)
+                call.respondText("it's work User",ContentType.Text.Plain)
             }
-            put("/"){
+            put("/Modifier/{id}"){
+                val put=Users(null,"Lady","Dimitricuse","LaLa@village.com","F","ethan")
+                if(call.parameters["id"]!=null)
+                    aUserDAO.updateUser(call.parameters["id"]!!.toInt(),put)
 
+                call.respondText("it's work User",ContentType.Text.Plain)
             }
             delete("/Supprimer/{id}") {
                 if(call.parameters["id"]!=null){

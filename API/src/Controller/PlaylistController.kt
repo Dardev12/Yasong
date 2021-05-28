@@ -18,8 +18,12 @@ fun Route.playlistRouting(aPlaylistDAO: PlaylistDAO){
             get("/Titre/{title}") {
                 // code to get a specific ticket
             }
-            post("/") {
+            post("/CreateAdd") {
                 // create a new ticket
+                val post=Playlists(null,1,1)
+
+                aPlaylistDAO.addPlaylist(post)
+                call.respondText("It's work",ContentType.Text.Plain)
             }
             put("/"){
 

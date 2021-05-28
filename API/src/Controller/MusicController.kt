@@ -55,7 +55,7 @@ fun Route.musicRouting(aMusicDAO: MusicDAO){
                 val put = Musics(null,"Cry","Big Life","3min",2)
                 if(call.parameters["id"]!= null && put != null )
                     aMusicDAO.updateMusic(call.parameters["id"]!!.toInt(),put)
-                
+
                 call.respondText("It's work",ContentType.Text.Plain)
             }
             delete("/Supprimer/{id}") {

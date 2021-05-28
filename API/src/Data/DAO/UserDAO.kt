@@ -10,12 +10,28 @@ class UserDAO(private val db:Database) :IUserDAO{
         SchemaUtils.create(User)
     }
 
-    override fun addUser(user: User) {
-        TODO("Not yet implemented")
+    override fun addUser(user: Users) {
+        transaction {
+            User.insert {
+                it[lastName]=user.lastName?:""
+                it[firstName]=user.firstName?:""
+                it[email]=user.email?:""
+                it[gender]=user.gender?:""
+                it[password]=user.password?:""
+            }
+        }
     }
 
-    override fun updateUser(tag: Int, aUser: User): Boolean {
-        TODO("Not yet implemented")
+    override fun updateUser(tag: Int, aUser: Users){
+        transaction {
+            User.update ({ User.tag eq tag}){
+                it[lastName]=aUser.lastName?:""
+                it[firstName]=aUser.firstName?:""
+                it[email]=aUser.email?:""
+                it[gender]=aUser.gender?:""
+                it[password]=aUser.password?:""
+            }
+        }
     }
 
     override fun removeUser(tag: Int) {
@@ -63,3 +79,4 @@ class UserDAO(private val db:Database) :IUserDAO{
     }
     override fun close() {}
 }
+
